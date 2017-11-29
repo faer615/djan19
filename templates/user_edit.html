@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网站首页</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .menu{
+            display: block;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div style="height: 48px; background-color: black; color:white;font-size: 28px;text-align:center;overflow: hidden;">
+        <center>欢迎使用daascmdb</center>
+    </div>
+    <div>
+        <div style="position: absolute;top:48px;bottom: 0;left:0;width:200px;background-color: azure;">
+            <a class="menu" href="/cmdb/user_info">用户管理</a>
+            <a class="menu" href="/cmdb/group_info">用户组管理</a>
+        </div>
+    </div>
+        <div style="position: absolute;top:48px;left:210px;bottom:0;right: 0;overflow: auto" >
+            <h1>编辑用户</h1>
+            <form method="post" action="/cmdb/useredit-{{ obj.id }}/">
+                <!-- input style="display: none" type="text" name="id" placeholder="用户ID" value="{{ obj.id }}"/ -->
+                <input type="text" name="username" placeholder="用户名" value="{{ obj.username }}"/>
+                <input type="password" name="password" placeholder="密码" value="{{ obj.password }}"/>
+                <input type="text" name="email" placeholder="邮箱" value="{{ obj.email }}"/>
+                <input type="text" name="other" placeholder="备注" value="{{ obj.other }}"/>
+                <input type="submit" value="提交"/>
+            </form>
+        </div>
+</div>
+</body>
+</html>

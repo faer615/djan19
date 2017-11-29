@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网站首页</title>
+</head>
+<body>
+<form action="{% url 'index' %}" method="POST">
+    <p><input type="text" name="user" placeholder="用户"/></p>
+    <p><input type="text" name="email" placeholder="邮箱"/></p>
+    <input type="submit" value="提交">
+</form>
+<ul>
+    {% for k,row in user_dict.items %}
+        <li><a target="_blank" href="/detail-{{ k }}-{{ k }}.html"> {{ row.name }}</a></li>
+    {% endfor %}
+</ul>
+<!--
+    {{ user_dict.k1 }}
+    <ul>
+        {% for k in user_dict.keys %}
+            <li>{{ k }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for val in user_dict.values %}
+            <li>{{ val }}</li>
+        {% endfor %}
+    </ul>
+    -->
+</body>
+</html>

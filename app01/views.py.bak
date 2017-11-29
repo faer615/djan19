@@ -1,0 +1,87 @@
+from django.shortcuts import render, redirect
+
+# Create your views here.
+
+USER_DICT = {
+    '1': {'name': 'user1', 'email': 'user1@info.com'},
+    '2': {'name': 'user2', 'email': 'user2@info.com'},
+    '3': {'name': 'user3', 'email': 'user3@info.com'},
+    '4': {'name': 'user4', 'email': 'user4@info.com'},
+    '5': {'name': 'user5', 'email': 'user5@info.com'},
+}
+
+def index(request):
+    return render(request, 'index.html', {'user_dict': USER_DICT})
+
+
+def detail(request, nid, *args, **kwargs):
+    # nid = request.GET.get('nid')
+    detail_info = USER_DICT[nid]
+    return render(request, 'detail.html', {'detail_info': detail_info})
+
+def login(request):
+    if request.method == "GET":
+        return render(request, 'login.html')
+    elif request.method == "POST":
+        # radio 单选
+        # v = request.POST.get('gender')
+        # print(v)
+        # 多选
+        # v = request.POST.getlist('favor')
+        # print(v)
+        # v = request.POST.get('updata')
+        # print(v)
+        obj = request.FILES.get('updata')
+        print(obj,type(obj),obj.name)
+
+        import os # 文件上传
+        file_path = os.path.join('upload', obj.name)
+        f = open(file_path, mode="wb")
+        for i in obj.chunks():
+            f.write(i)
+        f.close()
+
+        return render(request, 'login.html')
+    else:
+        # 提交方式 PUT,DELETE,HEAD,OPTION...
+        return redirect('/index/')
+
+
+# def home(request):
+#     return HttpResponse('Home')
+
+from django.views import View
+
+
+class Home(View):
+    def dispatch(self, request, *args, **kwargs):
+        # 调用父类的dispatch 助理作用
+        print('before')
+        result = super(Home, self).dispatch(self, request, *args, **kwargs)
+        print('after')
+        return result
+
+    def get(self, request):
+        print(request.method)
+        return render(request, 'home.html')
+
+    def post(self, request):
+        print(request.method, 'POST')
+        return render(request, 'home.html')
+
+
+"""
+def login(request):
+    if request.method == "GET":
+        return render(request, 'login.html')
+    elif request.method == "POST":
+        u = request.POST.get('user')
+        p = request.POST.get('pwd')
+        if u == 'user' and p == '111':
+            return redirect('/index/')
+        else:
+            return redirect(request, 'login.html')
+    else:
+        # 提交方式 PUT,DELETE,HEAD,OPTION...
+        return redirect('/index/')
+"""
